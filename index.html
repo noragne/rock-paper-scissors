@@ -25,6 +25,20 @@
 
 
 
+        let playSingleRound = (player, computer) => {
+
+            if( player == 'Rock' && computer == 'Scissors' ||
+                player == 'Scissors' && computer == 'Paper' ||
+                player == 'Paper' && computer == 'Rock'){
+                    return `You win! ${player} beats ${computer}.`;
+                } else if (player == computer){
+                   return "Draw!";
+                } else {
+                    return `You Lose! ${computer} beats ${player}.`;
+                }
+        }
+
+
 
 
 
