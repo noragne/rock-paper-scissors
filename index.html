@@ -21,11 +21,17 @@
                 case 3:
                     return 'Scissors';
             }
-        }
+        };
 
+        let capitalize = (str) => {
+            return str.charAt(0).toUpperCase() + str.toLowerCase().slice(1);
+        };
 
 
         let playSingleRound = (player, computer) => {
+
+            player = capitalize(player);
+            computer = capitalize(computer);
 
             if( player == 'Rock' && computer == 'Scissors' ||
                 player == 'Scissors' && computer == 'Paper' ||
@@ -34,9 +40,9 @@
                 } else if (player == computer){
                    return "Draw!";
                 } else {
-                    return `You Lose! ${computer} beats ${player}.`;
+                   return `You Lose! ${computer} beats ${player}.`;
                 }
-        }
+        };
 
 
 
