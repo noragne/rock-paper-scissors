@@ -36,7 +36,7 @@
             if( player == 'Rock' && computer == 'Scissors' ||
                 player == 'Scissors' && computer == 'Paper' ||
                 player == 'Paper' && computer == 'Rock'){
-                    return `You win! ${player} beats ${computer}.`;
+                    return `You Win! ${player} beats ${computer}.`;
                 } else if (player == computer){
                    return "Draw!";
                 } else {
@@ -45,7 +45,30 @@
         };
 
 
+        let game = () => {
+            let round = 0;
+            let playerScore = 0;
+            let computerScore = 0;
 
+            while(round < 5) {
+                let result = playSingleRound(prompt("What do you play?"), computerPlay());
+                console.log(result);
+                if(result.indexOf("Win") != -1){
+                    playerScore++;
+                } else if (result.indexOf("Lose") != -1) {
+                    computerScore++;
+                }
+
+                console.log(`The score is ${playerScore} for you, and ${computerScore} for the computer`);
+
+
+                round++
+            }
+            let finalResult = (playerScore > computerScore) ?
+                `You win ${playerScore} / ${computerScore}`:
+                `You lose ${playerScore} / ${computerScore}`;
+            console.log(finalResult);
+        };
 
 
 
