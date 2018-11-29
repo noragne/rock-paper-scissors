@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
             margin: auto;
             text-align: center;
         }
+
         button {
             width: 300px;
             height: 100px;
@@ -18,9 +20,19 @@
             font-size: 2em;
         }
 
-
+        #finalScoreScreen {
+            display: none;
+            position: relative;
+            width: 600px;
+            height: 110px;
+            background-color: yellow;
+            margin:auto;
+            top:-380px;
+            font-size: 100px;
+        }
     </style>
 </head>
+
 <body>
     <main>
         <h1>Rock Paper Scissors</h1>
@@ -29,14 +41,32 @@
         <button id="paper">Paper</button>
         <button id="scissors">scissors</button>
         <p id="result"></p>
+        <p id="finalScore"></p>
+        <div id="finalScoreScreen">You Lose</div>
     </main>
 
     <script>
+
+        let round = 0;
+        let playerScore = 0;
+        let computerScore = 0;
+
+        // DOM Variables
+        let btnRock = document.querySelector("#rock");
+        let btnPaper = document.querySelector("#paper");
+        let btnScissors = document.querySelector("#scissors");
+
+        let result = document.querySelector("#result");
+        let finalScore = document.querySelector("#finalScore");
+        let finalScoreScreen = document.querySelector("#finalScoreScreen");
+
+
+
         let computerPlay = () => {
             let random = Math.floor(Math.random() * 3 + 1);
             switch (random) {
                 case 1:
-                    return  'Rock';
+                    return 'Rock';
                     break;
                 case 2:
                     return 'Paper';
@@ -50,51 +80,77 @@
             return str.charAt(0).toUpperCase() + str.toLowerCase().slice(1);
         };
 
-
         let playSingleRound = (player, computer) => {
 
             player = capitalize(player);
             computer = capitalize(computer);
 
-            if( player == 'Rock' && computer == 'Scissors' ||
+            round++;
+            if (player == 'Rock' && computer == 'Scissors' ||
                 player == 'Scissors' && computer == 'Paper' ||
-                player == 'Paper' && computer == 'Rock'){
-                    return `You Win! ${player} beats ${computer}.`;
-                } else if (player == computer){
-                   return "Draw!";
-                } else {
-                   return `You Lose! ${computer} beats ${player}.`;
-                }
+                player == 'Paper' && computer == 'Rock') {
+                return `You Win! ${player} beats ${computer}.`;
+            } else if (player == computer) {
+                return `Draw! ${player} vs ${computer}.`;
+            } else {
+                return `You Lose! ${computer} beats ${player}.`;
+            }
+
         };
 
 
+        let calculateScore = (choice) => {
+            result.textContent = playSingleRound(choice.target.id, computerPlay());
+            if (result.textContent.indexOf("Win") != -1) {
+                playerScore++;
+            } else if (result.textContent.indexOf("Lose") != -1) {
+                computerScore++;
+            }
+
+            finalScore.textContent = (`The score is ${playerScore} for you, and ${computerScore} for the computer`);
+            console.log(playerScore + " " + computerScore);
+        };
+
+        let checkRoundAndReset = ()=>{
+            if(round == 5){
+
+                if(playerScore > computerPlay){
+                    finalScoreScreen.textContent = "You Win";
+                } else if (computerPlay > playerScore) {
+                    finalScoreScreen.textContent = "You Lose";
+                } else {
+                    finalScoreScreen.textContent = "Draw";
+                }
+
+                finalScoreScreen.style.display = "block";
+                setTimeout(()=>{
+                    finalScoreScreen.style.display = "none";
+                }, 1500) ;
+
+                round = 0;
+                playerScore =0;
+                computerScore = 0;
+            }
+        }
+
         // EventListener
-        let btnRock = document.querySelector("#rock");
-        let btnPaper = document.querySelector("#paper");
-        let btnScissors = document.querySelector("#scissors");
 
-        let result = document.querySelector("#result");
-
-        btnRock.addEventListener('click', () => {
-             result.textContent = playSingleRound("rock", computerPlay());
-
+        btnRock.addEventListener('click', (e) => {
+            calculateScore(e);
+            checkRoundAndReset();
         });
 
-        btnPaper.addEventListener('click', () => {
-            result.textContent = playSingleRound("paper", computerPlay());
+        btnPaper.addEventListener('click', (e) => {
+            calculateScore(e);
+            checkRoundAndReset();
         });
 
-        btnScissors.addEventListener('click', () => {
-            result.textContent = playSingleRound("scissors", computerPlay());
+        btnScissors.addEventListener('click', (e) => {
+            calculateScore(e);
+            checkRoundAndReset();
         });
-
-
-
-
-
-
-
 
     </script>
 </body>
+
 </html>
