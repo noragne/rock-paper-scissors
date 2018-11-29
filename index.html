@@ -5,8 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Rock Paper Scissors</title>
+    <style>
+        main {
+            width: 70%;
+            margin: auto;
+            text-align: center;
+        }
+        button {
+            width: 300px;
+            height: 100px;
+            margin: 20px;
+            font-size: 2em;
+        }
+
+
+    </style>
 </head>
 <body>
+    <main>
+        <h1>Rock Paper Scissors</h1>
+        <p>Please play by clicking on one of the buttons.</p>
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">scissors</button>
+        <p id="result"></p>
+    </main>
 
     <script>
         let computerPlay = () => {
