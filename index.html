@@ -46,27 +46,20 @@
 
 
         let game = () => {
-            let round = 0;
             let playerScore = 0;
             let computerScore = 0;
 
-            while(round < 5) {
-                let result = playSingleRound(prompt("What do you play?"), computerPlay());
-                console.log(result);
-                if(result.indexOf("Win") != -1){
-                    playerScore++;
-                } else if (result.indexOf("Lose") != -1) {
-                    computerScore++;
-                }
-
-                console.log(`The score is ${playerScore} for you, and ${computerScore} for the computer`);
-
-
-                round++
+            let result = playSingleRound(prompt("What do you play?"), computerPlay());
+            console.log(result);
+            if(result.indexOf("Win") != -1){
+                playerScore++;
+            } else if (result.indexOf("Lose") != -1) {
+                computerScore++;
             }
+
             let finalResult = (playerScore > computerScore) ?
-                `You win ${playerScore} / ${computerScore}`:
-                `You lose ${playerScore} / ${computerScore}`;
+                `You win`:
+                `You lose`;
             console.log(finalResult);
         };
 
