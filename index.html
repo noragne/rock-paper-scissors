@@ -68,27 +68,25 @@
         };
 
 
-        let game = () => {
-            let playerScore = 0;
-            let computerScore = 0;
+        // EventListener
+        let btnRock = document.querySelector("#rock");
+        let btnPaper = document.querySelector("#paper");
+        let btnScissors = document.querySelector("#scissors");
 
-            let result = playSingleRound(prompt("What do you play?"), computerPlay());
-            console.log(result);
-            if(result.indexOf("Win") != -1){
-                playerScore++;
-            } else if (result.indexOf("Lose") != -1) {
-                computerScore++;
-            }
+        let result = document.querySelector("#result");
 
-            let finalResult = (playerScore > computerScore) ?
-                `You win`:
-                `You lose`;
-            console.log(finalResult);
-        };
+        btnRock.addEventListener('click', () => {
+             result.textContent = playSingleRound("rock", computerPlay());
 
+        });
 
+        btnPaper.addEventListener('click', () => {
+            result.textContent = playSingleRound("paper", computerPlay());
+        });
 
-
+        btnScissors.addEventListener('click', () => {
+            result.textContent = playSingleRound("scissors", computerPlay());
+        });
 
 
 
