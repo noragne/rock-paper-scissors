@@ -1,19 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Rock Paper Scissors</title>
+    <style>
+        main {
+            width: 70%;
+            margin: auto;
+            text-align: center;
+        }
+
+        button {
+            width: 300px;
+            height: 100px;
+            margin: 20px;
+            font-size: 2em;
+        }
+
+        #finalScoreScreen {
+            display: none;
+            position: relative;
+            width: 600px;
+            height: 110px;
+            background-color: yellow;
+            margin:auto;
+            top:-380px;
+            font-size: 100px;
+        }
+    </style>
 </head>
+
 <body>
+    <main>
+        <h1>Rock Paper Scissors</h1>
+        <p>Please play by clicking on one of the buttons.</p>
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">scissors</button>
+        <p id="result"></p>
+        <p id="finalScore"></p>
+        <div id="finalScoreScreen">You Lose</div>
+    </main>
 
     <script>
+
+        let round = 0;
+        let playerScore = 0;
+        let computerScore = 0;
+
+        // DOM Variables
+        let btnRock = document.querySelector("#rock");
+        let btnPaper = document.querySelector("#paper");
+        let btnScissors = document.querySelector("#scissors");
+
+        let result = document.querySelector("#result");
+        let finalScore = document.querySelector("#finalScore");
+        let finalScoreScreen = document.querySelector("#finalScoreScreen");
+
+
+
         let computerPlay = () => {
             let random = Math.floor(Math.random() * 3 + 1);
             switch (random) {
                 case 1:
-                    return  'Rock';
+                    return 'Rock';
                     break;
                 case 2:
                     return 'Paper';
@@ -27,60 +80,77 @@
             return str.charAt(0).toUpperCase() + str.toLowerCase().slice(1);
         };
 
-
         let playSingleRound = (player, computer) => {
 
             player = capitalize(player);
             computer = capitalize(computer);
 
-            if( player == 'Rock' && computer == 'Scissors' ||
+            round++;
+            if (player == 'Rock' && computer == 'Scissors' ||
                 player == 'Scissors' && computer == 'Paper' ||
-                player == 'Paper' && computer == 'Rock'){
-                    return `You Win! ${player} beats ${computer}.`;
-                } else if (player == computer){
-                   return "Draw!";
-                } else {
-                   return `You Lose! ${computer} beats ${player}.`;
-                }
-        };
-
-
-        let game = () => {
-            let round = 0;
-            let playerScore = 0;
-            let computerScore = 0;
-
-            while(round < 5) {
-                let result = playSingleRound(prompt("What do you play?"), computerPlay());
-                console.log(result);
-                if(result.indexOf("Win") != -1){
-                    playerScore++;
-                } else if (result.indexOf("Lose") != -1) {
-                    computerScore++;
-                }
-
-                console.log(`The score is ${playerScore} for you, and ${computerScore} for the computer`);
-
-
-                round++
+                player == 'Paper' && computer == 'Rock') {
+                return `You Win! ${player} beats ${computer}.`;
+            } else if (player == computer) {
+                return `Draw! ${player} vs ${computer}.`;
+            } else {
+                return `You Lose! ${computer} beats ${player}.`;
             }
-            let finalResult = (playerScore > computerScore) ?
-                `You win ${playerScore} / ${computerScore}`:
-                `You lose ${playerScore} / ${computerScore}`;
-            console.log(finalResult);
+
         };
 
 
+        let calculateScore = (choice) => {
+            result.textContent = playSingleRound(choice.target.id, computerPlay());
+            if (result.textContent.indexOf("Win") != -1) {
+                playerScore++;
+            } else if (result.textContent.indexOf("Lose") != -1) {
+                computerScore++;
+            }
 
+            finalScore.textContent = (`The score is ${playerScore} for you, and ${computerScore} for the computer`);
+            console.log(playerScore + " " + computerScore);
+        };
 
+        let checkRoundAndReset = ()=>{
+            if(round == 5){
 
+                if(playerScore > computerPlay){
+                    finalScoreScreen.textContent = "You Win";
+                } else if (computerPlay > playerScore) {
+                    finalScoreScreen.textContent = "You Lose";
+                } else {
+                    finalScoreScreen.textContent = "Draw";
+                }
 
+                finalScoreScreen.style.display = "block";
+                setTimeout(()=>{
+                    finalScoreScreen.style.display = "none";
+                }, 1500) ;
 
+                round = 0;
+                playerScore =0;
+                computerScore = 0;
+            }
+        }
 
+        // EventListener
 
+        btnRock.addEventListener('click', (e) => {
+            calculateScore(e);
+            checkRoundAndReset();
+        });
 
+        btnPaper.addEventListener('click', (e) => {
+            calculateScore(e);
+            checkRoundAndReset();
+        });
 
+        btnScissors.addEventListener('click', (e) => {
+            calculateScore(e);
+            checkRoundAndReset();
+        });
 
     </script>
 </body>
+
 </html>

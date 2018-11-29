@@ -1,12 +1,11 @@
 Rock Paper Scissors Game
 
-to play type in the console:
-      
-      game() 
+To play click on the button of your choice.
+
+The result is displayed in the bottom.
+
+After 5 rounds the the result is displayed in a yellow box.
 
 
-When you start the game you will play 5 rounds one after one, and at the end you will get the final score.
-
-Write your choice in the prompt window : Rock, Paper, Scissors.
 
 Good luck and have fun!
